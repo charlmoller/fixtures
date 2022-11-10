@@ -1,0 +1,13 @@
+body {
+  background-color: #eee !important;
+  width: 100%;
+}
+
+* {
+  font-family: Visby;
+}
+
+.dropdown-toggle::after {
+  content: "" !important;
+  display: none !important;
+}

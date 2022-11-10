@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    user: root
+    command: sh -c "yarn install && yarn start"
+    environment:
+      - NODE_ENV=development
+      - PORT=7000
+    ports:
+      - '7000:7000'
+    working_dir: /backend
+    volumes:
+      - ./backend:/backend:cached
+
+  frontend:
+    image: node:12.3-alpine
+    command: sh -c "yarn install && yarn run start"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    ports:
+      - '3000:3000'
+    working_dir: /frontend
+    volumes:
+      - ./frontend:/frontend:cached
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+volumes:
+  mongodb_data_container:
